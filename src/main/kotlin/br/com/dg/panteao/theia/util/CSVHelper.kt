@@ -1,6 +1,7 @@
 package br.com.dg.panteao.theia.util
 
 import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVRecord
 import java.io.InputStreamReader
 import kotlin.reflect.KClass
 
@@ -13,19 +14,23 @@ inline fun <reified T> parseCSV(csvFormat: CSVFormat, reader: InputStreamReader)
         .setHeader(*getHeaders<T>().toTypedArray())
         .build()
         .parse(reader)
-        .map { record ->
-            val clazz = instantiateObject<T>()
+        .map(::parseObject)
 
-            T::class.java.declaredFields.forEach { field ->
-                field.getAnnotation(CSVHeader::class.java)?.let { csvHeader ->
-                    field.isAccessible = true
-                    field.set(clazz, record.get(csvHeader.header))
-                }
-            }
-            return@map clazz
+inline fun <reified T> parseObject(record: CSVRecord): T {
+    val clazz = instantiateObject<T>()
+
+    fillObject(clazz, record)
+
+    return clazz
+}
+
+inline fun <reified T> fillObject(clazz: T, record: CSVRecord) {
+    T::class.java.declaredFields.forEach { field ->
+        field.getAnnotation(CSVHeader::class.java)?.let { csvHeader ->
+            field.isAccessible = true
+            field.set(clazz, record.get(csvHeader.header))
         }
-
-inline fun <reified T> instantiateObject(): T {
+    }
 //            T::class.declaredMembers.forEach { member ->
 //
 //
@@ -37,6 +42,10 @@ inline fun <reified T> instantiateObject(): T {
 //            }
 
 //            val clazz = T::class.java.getDeclaredConstructor().newInstance()
+}
+
+inline fun <reified T> instantiateObject(): T {
+
 
     val constructor = T::class.constructors.first()
 
