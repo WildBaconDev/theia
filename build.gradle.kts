@@ -26,6 +26,8 @@ dependencies {
 
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 
+	implementation("org.apache.commons:commons-csv:1.9.0")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
