@@ -1,14 +1,18 @@
 package br.com.dg.panteao.theia.model
 
-import br.com.dg.panteao.theia.util.CSVHeader
+import java.time.LocalDateTime
+import javax.persistence.*
 
+@Entity
+@Table
 data class Transacao(
-    @CSVHeader("banco_origem") val bancoOrigem: String,
-    @CSVHeader("agencia_origem") val agenciaOrigem: String,
-    @CSVHeader("conta_origem") val contaOrigem: String,
-    @CSVHeader("banco_destino") val bancoDestino: String,
-    @CSVHeader("agencia_destino") val agenciaDestino: String,
-    @CSVHeader("conta_destino") val contaDestino: String,
-    @CSVHeader("valor_transacao") val valorTransacao: String,
-    @CSVHeader("data_hora_transacao") val dataHoraTransacao: String,
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long? = null,
+    val bancoOrigem: String,
+    val agenciaOrigem: String,
+    val contaOrigem: String,
+    val bancoDestino: String,
+    val agenciaDestino: String,
+    val contaDestino: String,
+    val valorTransacao: String,
+    val dataHoraTransacao: LocalDateTime,
 )

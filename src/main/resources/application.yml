@@ -6,5 +6,10 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       show-sql: true
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
