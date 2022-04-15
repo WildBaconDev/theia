@@ -15,4 +15,5 @@ data class Transacao(
     val contaDestino: String,
     val valorTransacao: String,
     val dataHoraTransacao: LocalDateTime,
+    @ManyToOne @JoinColumn(name="importacao_id") var upload: Importacao? = null,
 )

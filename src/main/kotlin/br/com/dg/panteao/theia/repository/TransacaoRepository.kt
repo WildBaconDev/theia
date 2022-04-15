@@ -1,4 +1,4 @@
-package br.com.dg.panteao.theia
+package br.com.dg.panteao.theia.repository
 
 import br.com.dg.panteao.theia.model.Transacao
 import org.springframework.data.jpa.repository.JpaRepository
